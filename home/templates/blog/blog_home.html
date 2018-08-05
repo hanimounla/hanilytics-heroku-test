@@ -1,0 +1,45 @@
+<title>Blog | Hanilytics</title>
+{% extends "pages/base.html" %} 
+
+{% block content %}
+<div class="wrapper row3">
+    <section class="hoc container clear">
+        <!-- ################################################################################################ -->
+        <h6 class="heading">Welcome to Hanilytics Blog!</h6>
+        <p class="nospace btmspace-80">Where you will find latest articles in arabic and english about Analytics, Machine Learning and AI from all over
+            the world!</p>
+            <img class="article-img" src="/static/images/dream_pic.jpg" alt="">
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <div class="group latest">
+            {% for article in articles %}
+            <article class="one_third">
+                <figure>
+                    <a href="article/{{article.url_title}}"> <!-- {% url 'view_article' urltitle=article.url_title %} -->
+                        <img class="article-img" src="{{article.image.name|slice:'4:'}}" alt="">
+                    </a>
+                </figure>
+                <div class="txtwrap">
+                    <h4 class="heading">{{article.title}}</h4>
+                    <ul class="nospace meta">
+                        <li>
+                            <a href="{{article.category}}">{{article.category}} - </a> {{article.date}}
+                        </li>
+                    </ul>
+                    <p>{{article.text|truncatechars:100}}</p>
+                </div>
+            </article>
+            {% endfor %}
+        </div>
+        <a class="btn" href="new-article">Add Arcticle</a>
+        <a class="btn" href="new-category">Add Category</a>
+        <a class="btn" href="new-author">Add Author</a>
+        <a class="btn" href="all_articles">All Articles</a>
+        <!-- ################################################################################################ -->
+    </section>
+</div>
+<script src="/static/layout/scripts/layout.js"></script>
+{% endblock %}
