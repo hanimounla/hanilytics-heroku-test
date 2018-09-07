@@ -1,0 +1,64 @@
+{% extends 'includes/base.html' %} 
+{%block title%} Blog | Hanilytics {%endblock%} 
+
+{% block content %} 
+
+{%block topics%} 
+{%include 'blog/topics.html'%} 
+{%endblock%}
+
+{%block breadcrumb%}
+    <div class="wrapper row2">
+        <div id="breadcrumb" class="hoc clear">
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a >Blog</a></li>
+            </ul>
+        </div>
+    </div>
+{%endblock%}
+
+<div class="row3">
+  <section class="hoc container clear">
+    <h1>
+      <form method="POST">
+          <select name="item_id" class = "">
+          {% for tag in tags %}
+              <option href = "{% url 'blog:post-list-by-tag' tag.slug %}" value="{{ tag.slug }}">{{ tag.name }}</option>
+          {% endfor %}
+          </select>
+          </form>
+        </h1>
+    <div class="group latest">
+      {% for post in posts %}
+      <article class="one_third" id = 'article'>
+        <figure>
+          <a href="{% url 'blog:post-detail' slug=post.slug %}">
+            <img class="article-img" src="/m/{{post.image}}">
+          </a>
+        </figure>
+        <h2>
+          <a href="{% url 'blog:post-detail' slug=post.slug %}">{{ post.title }}</a>
+        </h2>
+
+        <div class="date">
+          <span class="glyphicon glyphicon-time"></span>
+          {{ post.published_date|date:"F j, Y" }} - 
+          {% for tag in post.tags.all %}
+            <a href="{% url 'blog:post-list-by-tag' tag.slug %}">{{ tag.name }}, </a>
+          {% endfor %}
+        </div>
+        <p>{{post.snippet|safe}}</p>
+
+        <footer><a href="{% url 'blog:post-detail' slug=post.slug %}">Read More »</a></footer>
+
+      </article>
+      {% empty %}
+      <h1>Blog</h1>
+
+      <p>No posts yet.</p>
+      {% endfor %}
+    </div>
+  </section>
+</div>
+{% endblock %}
